@@ -174,6 +174,54 @@ Vue.component("Search", {
   }
 });
 
+Vue.component("List", {
+  render() {
+    let main_Title = this.titles.map(function(title) {
+      return (
+        <td>
+          <b>{title}</b>
+        </td>
+      );
+    });
+
+    return (
+      <table border="1">
+        <tr>{main_Title}</tr>
+        {this.renderTableData}
+      </table>
+    );
+  },
+  data() {
+    return {
+      titles: ["Title", "Type", "Owner", "Date", "Star", "Trash"],
+      showList: this.items,
+      startDate: "",
+      endDate: "",
+      isNotme: ""
+    };
+  },
+  props: {
+    items: {
+      type: Array
+    }
+  },
+  watch: {
+    items() {
+      this.showList = this.items;
+    }
+  },
+  computed: {
+    renderTableData() {
+      return this.showList.map(item => {
+        let rowData = Object.values(item).map(values => {
+          return <td>{values}</td>;
+        });
+        return <tr>{rowData}</tr>;
+      });
+    }
+  }
+});
+
 new Vue({
   el: "#app",
   data: {
@@ -201,6 +249,7 @@ new Vue({
     return (
       <div id="#app">
         <Search propsFields={this.fields} />
+        <List propsItems={this.items} />
       </div>
     );
   }
