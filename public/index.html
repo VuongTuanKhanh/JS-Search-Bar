@@ -1,17 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <style>
+    .container {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .form-popup {
+      display: none;
+      position: fixed;
+      width: 100%;
+      z-index: 9;
+    }
+
+    .date-range {
+      position: relative;
+      cursor: pointer;
+      width: 35%;
+      font-size: 18px;
+      margin: auto;
+      margin-bottom: 10px;
+      margin-top: 15px;
+      margin-left: 10px;
+      opacity: 0.8;
+      display: none;
+    }
+
+    .form-container .btn:hover {
+      opacity: 1;
+    }
+
+    .btn-search {
+      font-weight: bolder;
+      font-size: 20px;
+      text-align: center;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      max-width: 20%;
+      width: 20%;
+      margin: 10px 20px 20px 10px;
+      background-color: #2196f3;
+      opacity: 0.8;
+    }
+
+    .form-container .btn {
+      font-weight: bolder;
+      font-size: 20px;
+      text-align: left;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      max-width: 98%;
+      width: 100%;
+      margin: 10px 20px 0px 10px;
+      opacity: 0.8;
+    }
+
+    span.Starred {
+      font-size: 20px;
+      padding: 10px;
+      margin-left: 30%;
+    }
+
+    span.Trash {
+      font-size: 20px;
+      padding: 10px;
+      margin-right: 20%;
+    }
+
+    select {
+      padding: 16px 20px;
+      position: relative;
+      cursor: pointer;
+      max-width: 86%;
+      width: 86%;
+      font-size: 20px;
+      margin: 10px;
+      margin-right: 10px;
+      opacity: 0.8;
+    }
+
+    #search-term {
+      padding: 16px 20px;
+      position: relative;
+      cursor: pointer;
+      font-size: 18px;
+      margin: 10px;
+      margin-right: 10px;
+      opacity: 0.8;
+    }
+
+    .input-box {
+      padding: 16px 20px;
+      position: relative;
+      cursor: pointer;
+      width: 50%;
+      font-size: 18px;
+      margin: auto;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      opacity: 0.8;
+      display: none;
+    }
+
+    option {
+      font-size: 20px;
+    }
+
+    label {
+      font-weight: bolder;
+      font-size: 20px;
+      position: relative;
+      text-align: left;
+      border: none;
+      max-width: 10%;
+      opacity: 0.8;
+    }
+
+    .form-container {
+      width: 50%;
+      margin: auto;
+      background-color: white;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    .search-container {
+      display: flex;
+      width: 50%;
+      margin: auto;
+      margin-top: 20px;
+    }
+
+    .search-bar {
+      padding: 10px;
+      position: relative;
+      font-size: 17px;
+      border: 1px solid grey;
+      float: left;
+      width: 80%;
+      background: #f1f1f1;
+    }
+
+    .close-button {
+      float: left;
+      width: 20%;
+      padding: 10px;
+      background: #2196f3;
+      color: white;
+      font-size: 17px;
+      border: 1px solid grey;
+      border-left: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>
