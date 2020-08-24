@@ -24,18 +24,10 @@ Vue.component("Search", {
             X
           </button>
         </div>
-        <div class="form-popup" id="myForm">
-          <div class="form-container">
-            <button class="btn">Sites</button>
-            <button class="btn">Pages</button>
-            <button
-              class="btn"
-              onClick={() => this.closeForm("myForm", "advanceForm")}
-            >
-              Advance Search
-            </button>
-          </div>
-        </div>
+
+        {this.Selectors()}
+
+        
         <div class="form-popup" id="advanceForm">
           <div class="form-container">
             {this.Types()}
@@ -52,6 +44,27 @@ Vue.component("Search", {
     );
   },
   methods: {
+    Selectors() {
+      try {
+        let options = this.fields.Types.map(type => {
+          return (
+            <button class="btn" value={type} onClick={e => this.test(e)}>
+              {type}
+            </button>
+          );
+        });
+        return (
+          <div class="form-popup" id="myForm">
+            <div class="form-container">{options}</div>
+          </div>
+        );
+      } catch {
+        return;
+      }
+    },
+    test(e) {
+      console.log(e.target.value);
+    },
     Types() {
       try {
         let options = this.fields.Advance.map(type => {
