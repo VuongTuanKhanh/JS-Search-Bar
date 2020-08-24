@@ -9,41 +9,30 @@ Vue.component("Search", {
     }
   },
   render() {
-    return (
-      <div class="container">
-        <div class="search-container">
-          <input
-            type="text"
-            placeholder="Search..."
-            class="search-bar"
-            id="searchBar"
-            readonly
-            onClick={() => this.openForm("myForm")}
-          />
-          <button class="close-button" onClick={this.closeAllForm}>
-            X
-          </button>
-        </div>
-
-        {this.Selectors()}
-
-        
-        <div class="form-popup" id="advanceForm">
-          <div class="form-container">
-            {this.Types()}
-            {this.Owners()}
-            {this.SpecificName()}
-            {this.Status()}
-            {this.Dates()}
-            {this.SelectDate()}
-            {this.SearchTerm()}
-            <button class="btn-search">Search</button>
-          </div>
-        </div>
-      </div>
-    );
+    return this.MainForm();
   },
   methods: {
+    SearchBar() {
+      try {
+        return (
+          <div class="search-container">
+            <input
+              type="text"
+              placeholder="Search..."
+              class="search-bar"
+              id="searchBar"
+              readonly
+              onClick={() => this.openForm("myForm")}
+            />
+            <button class="close-button" onClick={this.closeAllForm}>
+              X
+            </button>
+          </div>
+        );
+      } catch {
+        return;
+      }
+    },
     Selectors() {
       try {
         let options = this.fields.Types.map(type => {
@@ -61,6 +50,35 @@ Vue.component("Search", {
       } catch {
         return;
       }
+    },
+    AdvanceForm() {
+      try {
+        return (
+          <div class="form-popup" id="advanceForm">
+            <div class="form-container">
+              {this.Types()}
+              {this.Owners()}
+              {this.SpecificName()}
+              {this.Status()}
+              {this.Dates()}
+              {this.SelectDate()}
+              {this.SearchTerm()}
+              <button class="btn-search">Search</button>
+            </div>
+          </div>
+        );
+      } catch {
+        return;
+      }
+    },
+    MainForm() {
+      return (
+        <div class="container">
+          {this.SearchBar()}
+          {this.Selectors()}
+          {this.AdvanceForm()}
+        </div>
+      );
     },
     test(e) {
       console.log(e.target.value);
