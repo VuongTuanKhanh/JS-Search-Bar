@@ -37,7 +37,11 @@ Vue.component("Search", {
       try {
         let options = this.fields.Types.map(type => {
           return (
-            <button class="btn" value={type} onClick={e => this.test(e)}>
+            <button
+              class="btn"
+              value={type}
+              onClick={e => this.Action(e.target.value)}
+            >
               {type}
             </button>
           );
@@ -80,8 +84,10 @@ Vue.component("Search", {
         </div>
       );
     },
-    test(e) {
-      console.log(e.target.value);
+    Action(type) {
+      if (type == "Advanced Search") {
+        this.closeForm("myForm", "advanceForm");
+      }
     },
     Types() {
       try {
