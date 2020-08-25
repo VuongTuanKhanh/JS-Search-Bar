@@ -86,7 +86,7 @@ Vue.component("Search", {
           } else {
             this.query.term = item;
           }
-          console.log(this.outputString);
+          this.handleSubmit();
         }
       }
     },
@@ -140,7 +140,6 @@ Vue.component("Search", {
         this.isNotme = true;
       }
       this.$emit("submitQuery", this.outputString, this.conditions);
-      this.closeAllForm();
     },
     MainForm() {
       return (
@@ -151,10 +150,21 @@ Vue.component("Search", {
         </div>
       );
     },
+    Reset() {
+      this.type = "";
+      this.query.owner = "";
+      this.query.starred = false;
+      this.query.trash = false;
+      this.query.term = "";
+      this.startDate = "";
+      this.endDate = "";
+      this.isNotme = false;
+    },
     Action(type) {
       if (type == "Advanced Search") {
         this.closeForm("myForm", "advanceForm");
       } else {
+        this.Reset();
         this.query.type = type;
         this.handleSubmit();
       }
