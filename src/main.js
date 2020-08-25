@@ -8,6 +8,11 @@ Vue.component("Search", {
       type: Object
     }
   },
+  data() {
+    return {
+      selectedType: ""
+    };
+  },
   render() {
     return this.MainForm();
   },
@@ -87,22 +92,31 @@ Vue.component("Search", {
     Action(type) {
       if (type == "Advanced Search") {
         this.closeForm("myForm", "advanceForm");
+      } else {
+        this.selectedType = type;
+        console.log("Selected:", this.selectedType);
       }
     },
     Types() {
       try {
         let options = this.fields.Advance.map(type => {
-          return <option>{type}</option>;
+          return <option value={type.value}>{type.title}</option>;
         });
         return (
           <div>
             <label>Type</label>
-            <select>{options}</select>
+            <select onChange={e => this.ChangeType(e.target.value)}>
+              {options}
+            </select>
           </div>
         );
       } catch {
         return;
       }
+    },
+    ChangeType(newType) {
+      this.selectedType = newType;
+      console.log("Advance Type:", this.selectedType);
     },
     Owners() {
       try {
