@@ -1,7 +1,8 @@
 {
     "fields": {
         "Types": ["Site", "Page", "Advanced Search"],
-        "Advance": [{
+        "Advance": [
+            {
                 "title": "All types",
                 "value": ""
             },
@@ -14,12 +15,47 @@
                 "value": "Page"
             }
         ],
-        "Owners": ["Anyone", "Owned by me", "Not owned by me", "Specific Person..."],
-        "Persons": ["admin", "designer", "editor", "sysadmin"],
+        "Owners": [
+            {
+                "title": "Anyone",
+                "value": ""
+            },
+            {
+                "title": "Owned by me",
+                "value": "Khanh"
+            }, 
+            {
+                "title": "Not owned by me",
+                "value": "!Khanh"
+            },
+            {
+                "title": "Specific Person...",
+                "value": "Specific Person..."
+            }
+        ],
+        "Persons": [
+            {
+                "title": "admin",
+                "value": "Jason_Dang"
+            },
+            {
+                "title": "designer",
+                "value": "designer_Khanh"
+            }, 
+            {
+                "title": "editor",
+                "value": "editor_Khanh"
+            },
+            {
+                "title": "sysadmin",
+                "value": "sysadmin_Jason_Dang"
+            }
+        ],
         "Date": ["Anytime", "Today", "Yesterday", "Last 7 days", "Last 30 days", "Last 90 days", "Custom..."],
         "Status": ["Starred", "Trash"]
     },
-    "items": [{
+    "items": [
+        {
             "Title": "Oren",
             "Type": "Site",
             "Owner": "Ivory",
