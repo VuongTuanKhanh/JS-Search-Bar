@@ -52,14 +52,14 @@
             }
         ],
         "Date": ["Anytime", "Today", "Yesterday", "Last 7 days", "Last 30 days", "Last 90 days", "Custom..."],
-        "Status": ["Starred", "Trash"]
+        "InputFields": ["type", "owner", "term", "starred", "starred"]
     },
     "items": [
         {
             "Title": "Oren",
             "Type": "Site",
             "Owner": "Ivory",
-            "Date": "2011-10-10",
+            "Date": "2020-08-25",
             "Starred": "false",
             "Trash": "true"
         },
@@ -67,7 +67,7 @@
             "Title": "Allistair",
             "Type": "Page",
             "Owner": "Bianca",
-            "Date": "1999-11-20",
+            "Date": "2020-08-24",
             "Starred": "false",
             "Trash": "false"
         },
@@ -75,7 +75,7 @@
             "Title": "Ezekiel",
             "Type": "Site",
             "Owner": "TaShya",
-            "Date": "2013-01-20",
+            "Date": "2020-08-26",
             "Starred": "true",
             "Trash": "false"
         },

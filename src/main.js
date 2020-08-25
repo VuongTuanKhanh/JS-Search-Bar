@@ -18,7 +18,8 @@ Vue.component("Search", {
         term: ""
       },
       startDate: "",
-      endDate: ""
+      endDate: "",
+      isNotme: false
     };
   },
   render() {
@@ -33,6 +34,20 @@ Vue.component("Search", {
         }
       }
       return computedQueryString;
+    },
+    outputString() {
+      let computedQueryString = "";
+      for (let key in this.query) {
+        if (this.query[key]) {
+          computedQueryString += key + ":" + this.query[key] + "&";
+        }
+      }
+      computedQueryString = computedQueryString.replace("term:", "");
+      return computedQueryString;
+    },
+    conditions() {
+      console.log(this.startDate);
+      return this.startDate + "&" + this.endDate + "&" + this.isNotme;
     }
   },
   methods: {
@@ -45,8 +60,8 @@ Vue.component("Search", {
               placeholder="Search..."
               class="search-bar"
               id="searchBar"
-              readonly
               domPropsValue={this.queryString}
+              onKeyup={e => this.handleInput(e)}
               onClick={() => this.openForm("myForm")}
             />
             <button class="close-button" onClick={this.closeAllForm}>
@@ -56,6 +71,23 @@ Vue.component("Search", {
         );
       } catch {
         return;
+      }
+    },
+    handleInput(e) {
+      if (e.keyCode === 13) {
+        let items = e.target.value.split(" ");
+        for (let item of items) {
+          if (item.includes(":")) {
+            let temp = item.split(":");
+            let header = temp[0].toLowerCase();
+            if (this.fields.InputFields.includes(header)) {
+              this.query[header] = temp[1];
+            }
+          } else {
+            this.query.term = item;
+          }
+          console.log(this.outputString);
+        }
       }
     },
     Selectors() {
@@ -92,13 +124,23 @@ Vue.component("Search", {
               {this.Dates()}
               {this.SelectDate()}
               {this.SearchTerm()}
-              <button class="btn-search">Search</button>
+              <button class="btn-search" onClick={this.handleSubmit}>
+                Search
+              </button>
             </div>
           </div>
         );
       } catch {
         return;
       }
+    },
+    handleSubmit() {
+      if (this.queryString.includes("owner:!")) {
+        this.query.owner = "";
+        this.isNotme = true;
+      }
+      this.$emit("submitQuery", this.outputString, this.conditions);
+      this.closeAllForm();
     },
     MainForm() {
       return (
@@ -114,6 +156,7 @@ Vue.component("Search", {
         this.closeForm("myForm", "advanceForm");
       } else {
         this.query.type = type;
+        this.handleSubmit();
       }
     },
     Types() {
@@ -331,7 +374,6 @@ Vue.component("Search", {
     closeAllForm() {
       this.closeForm("myForm");
       this.closeForm("advanceForm");
-      console.log(this.queryString);
     }
   }
 });
@@ -365,11 +407,70 @@ Vue.component("List", {
   props: {
     items: {
       type: Array
+    },
+    queryString: {
+      type: String
+    },
+    conditions: {
+      type: String
+    }
+  },
+  methods: {
+    filtering() {
+      let filteredList = [];
+      for (let item of this.items) {
+        let itemQueryString = "";
+        Object.entries(item).map(
+          ([key, value]) =>
+            (itemQueryString +=
+              key.toLowerCase() + ":" + value.toLowerCase() + " ")
+        );
+        let isFalse = false;
+        for (let condition of this.queryString.split("&")) {
+          if (!itemQueryString.includes(condition)) {
+            isFalse = true;
+            break;
+          }
+        }
+        if (!isFalse) {
+          filteredList.push(item);
+        }
+      }
+      this.showList = filteredList;
+      if (this.isNotme == "true") {
+        for (let i in this.showList) {
+          if (this.showList[i].Owner == "Khanh") {
+            delete this.showList[i];
+          }
+        }
+      }
+
+      if (this.startDate != "" && this.endDate !== "") {
+        for (let i in this.showList) {
+          if (
+            this.showList[i].Date < this.startDate ||
+            this.showList[i].Date > this.endDate
+          ) {
+            delete this.showList[i];
+          }
+        }
+      }
     }
   },
   watch: {
     items() {
       this.showList = this.items;
+    },
+    conditions() {
+      let conditions = this.conditions.split("&");
+      this.startDate = conditions[0];
+      this.endDate = conditions[1];
+      this.isNotme = conditions[2];
+      this.filtering();
+    },
+    queryString() {
+      this.queryString = this.queryString.toLowerCase();
+      this.filtering();
     }
   },
   computed: {
@@ -388,7 +489,9 @@ new Vue({
   el: "#app",
   data: {
     items: [],
-    fields: {}
+    fields: {},
+    queryString: "",
+    conditions: ""
   },
   created() {
     EventService.getItems()
@@ -410,9 +513,22 @@ new Vue({
   render() {
     return (
       <div id="#app">
-        <Search propsFields={this.fields} />
-        <List propsItems={this.items} />
+        <Search
+          propsFields={this.fields}
+          onSubmitQuery={this.handleSubmitRequest}
+        />
+        <List
+          propsItems={this.items}
+          propsQueryString={this.queryString}
+          propsConditions={this.conditions}
+        />
       </div>
     );
+  },
+  methods: {
+    handleSubmitRequest(queryString, condition) {
+      this.queryString = queryString;
+      this.conditions = condition;
+    }
   }
 });
